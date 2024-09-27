@@ -53,6 +53,9 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone'
   }),
+  server: {
+    port: 3000
+  }
 });
 ```
 
@@ -111,7 +114,7 @@ Create `src/pages/about.astro`:
 		</nav>
 		<main>
 			<h1>About</h1>
-			<p>Lorem ipsum consequat voluptate qui quis reprehenderit veniam exercitation. Deserunt non magna fugiat proident occaecat magna magna et velit laborum cupidatat aliqua est. Qui duis nostrud aliquip sint proident labore aute esse enim cupidatat ad culpa fugiat sint.</p>
+			<p>Lorem ipsum dolor sit amet consequat voluptate qui quis reprehenderit veniam exercitation. Deserunt non magna fugiat proident occaecat magna magna et velit laborum cupidatat aliqua est. Qui duis nostrud aliquip sint proident labore aute esse enim cupidatat ad culpa fugiat sint.</p>
 		</main>
   </body>
 </html>
@@ -131,6 +134,24 @@ Add a `start` script to the project `package.json`. You should only need to upda
     "astro": "astro"
   }
 }
+```
+
+Now you can run and test out your project in developer mode by running:
+
+```
+❯ npm run dev
+
+> fortune-cookies-astro@0.0.1 dev
+> astro dev
+
+11:21:28 [types] Generated 1ms
+
+ astro  v4.15.9 ready in 100 ms
+
+┃ Local    http://localhost:3000/
+┃ Network  use --host to expose
+
+11:21:28 watching for file changes...
 ```
 
 ## Deploying to Render
@@ -168,29 +189,29 @@ Commit and push your project files as usual.
 
 ### Step 2: Set up a new Web Service on Render
 
+This assumes you have an account on https://render.com/ ... If not create one. This demo will run on their Free Tier but there may be a _significant_ delay when starting up any cold SSR route in your web application on that tier. Upgrade to a paid tier to get better performance more suitable for production.
+
 1. Log in to your Render account and click "New +" then "Web Service".
 
-2. Connect your Git repository.
+2. Connect your GitHub repository. You will need to grant Render access to your GitHub repos, so follow those steps as they are presented to you.
 
-3. Configure the deployment:
+3. Configure the deployment in your Render project (dashboard):
    - **Name**: fortune-cookies-astro
    - **Environment**: Node
-   - **Build Command**: `npm run build`
+   - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
 
-4. Add an environment variable:
+4. Add the following environment variables in your Render project (dashboard):
    - Key: `NODE_VERSION`
-   - Value: `20.17.0` (or your preferred Node.js version)
+   - Value: `20.17.0` (or whatever your preferred node version is)
+  - Key: `PORT`
+  - Value: `3000` (must match the `server.port` value in your `astro.config.mjs`, see above)
 
-5. Click "Create Web Service".
-
-### Step 3: Deploy your application
-
-Render will automatically deploy your application. Once the deployment is complete, you can access your site at the provided URL.
+5. Click the "Deploy Web Service" button in your Render project (dashboard) and wait while the project is built and deployed. The process is logged in your Render project (dashboard) console.
 
 ## Verifying the Deployment
 
-1. Visit the main URL to see a new fortune generated server-side on each refresh.
-2. Visit the `/about` page to see the static content.
+Find the URL of your web application in your Render project (dashboard). For example, my project can be viewed at https://fortune-cookies-astro.onrender.com/
 
-By following these steps, you've created an Astro application with hybrid rendering, featuring both server-side rendered and static pages, and deployed it to Render. The SSR index page will generate a new fortune on each request, while the About page remains static, demonstrating the hybrid capabilities of your Astro application.
+- Visit the `/` page to see the dynamic SSR content.
+- Visit the `/about` page to see the static SSB content.
