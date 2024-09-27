@@ -54,10 +54,13 @@ export default defineConfig({
     mode: 'standalone'
   }),
   server: {
+    host: '0.0.0.0',
     port: 3000
   }
 });
 ```
+
+**Note** the `server` entry... The `host` value must be `0.0.0.0` to be runnable on Render. The `port` value can be [any number supported by Render](https://docs.render.com/web-services#port-binding) but whatever value you choose, you must **also** create a `PORT` environmental variable in your Render project with the same value as in your `astro.config.mjs` file (this is mentioned later).
 
 ### Step 4: Create the index page (SSR)
 
