@@ -13,15 +13,15 @@ Confirm that you have a recent version of NodeJS available.
 v20.17.0
 ```
 
-## 1. Initializing and Configuring the Project
+## Initializing and Configuring the Project
 
 ### Step 1: Create the Astro project
 
 This will run the Astro set up script which will present some questions for how you want to configure the project:
 
 ```bash
-❯ npm create astro@latest fortune-cookies
-❯ cd fortune-cookies
+❯ npm create astro@latest fortune-cookies-astro
+❯ cd fortune-cookies-astro
 ```
 
 Choose the following options:
@@ -119,7 +119,7 @@ Create `src/pages/about.astro`:
 
 ### Step 6: Update package.json
 
-Add a start script to `package.json`:
+Add a `start` script to the project `package.json`. You should only need to update the script named `start` and can leave the other scripts as they are:
 
 ```json
 {
@@ -133,13 +133,38 @@ Add a start script to `package.json`:
 }
 ```
 
-## 2. Deploying to Render
+## Deploying to Render
 
-### Step 1: Prepare your project for deployment
+### Step 1: Commit the project to GitHub
 
-1. Create a new Git repository and push your project to it (e.g., GitHub, GitLab).
+Since we chose to "Initialize a new git repository" in the Astro setup menu above, you should already have the git repo initialised:
 
-2. Ensure your `package.json` includes the `start` script as shown above.
+```bash
+❯ git status                                                
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+	modified:   astro.config.mjs
+	modified:   package-lock.json
+	modified:   package.json
+	modified:   src/pages/index.astro
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	src/pages/about.astro
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Create a new repository in GitHub and note the HTTPS url. Connect that repo to your local project repository:
+
+```bash
+❯ git remote add origin https://github.com/micmath/fortune-cookies-astro.git
+```
+
+Commit and push your project files as usual.
 
 ### Step 2: Set up a new Web Service on Render
 
@@ -148,14 +173,14 @@ Add a start script to `package.json`:
 2. Connect your Git repository.
 
 3. Configure the deployment:
-   - **Name**: fortune-cookies
+   - **Name**: fortune-cookies-astro
    - **Environment**: Node
    - **Build Command**: `npm run build`
    - **Start Command**: `npm start`
 
 4. Add an environment variable:
    - Key: `NODE_VERSION`
-   - Value: `18.17.1` (or your preferred Node.js version)
+   - Value: `20.17.0` (or your preferred Node.js version)
 
 5. Click "Create Web Service".
 
